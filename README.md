@@ -1,6 +1,127 @@
-# wsnshop_mobile
+# wsnshop
 
-A Flutter project.
+##### Nama: Wisnu Nugroho
+##### NPM: 2306275084
+##### Kelas: PBP-D
+
+<hr>
+
+## Tugas 8
+
+### Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+
+Penggunaan `const` di Flutter berfungsi untuk membuat objek yang bersifat tetap dan tidak berubah sepanjang runtime. Dengan menandai objek sebagai `const`, Flutter dapat menghindari pembuatan ulang objek yang sama setiap kali widget melakukan *rerender*, karena objek yang tidak berubah bisa langsung digunakan kembali oleh Flutter.
+
+Keuntungan menggunakan `const` pada Flutter yaitu:
+- Menghemat memori dengan menghindari alokasi ulang objek.
+- Meningkatkan performa aplikasi dengan mengurangi pekerjaan mesin virtual Dart.
+- Memungkinkan optimasi waktu kompilasi, mempercepat waktu pemuatan aplikasi.
+
+`const` sebaiknya digunakan pada widget atau nilai yang tidak berubah. Hindari penggunaan `const` pada objek yang membutuhkan perubahan dinamis. Jika sebuah objek dinamis ditandai dengan `const`, maka objek tersebut tidak akan dapat diperbarui selama runtime. Ini dapat menyebabkan bug, seperti tampilan yang tidak terupdate saat data berubah.
+
+### Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+
+`Column` dan `Row` adalah dua widget layout utama di Flutter yang digunakan untuk menyusun elemen secara vertikal dan horizontal. Perbedaannya terletak pada arah tata letak elemen yang mereka kelola.
+
+- `Column`: Menyusun elemen secara vertikal, satu di bawah yang lainnya.
+    ```dart
+    Column(
+        children: <Widget>[
+            Text('Item 1'),
+            Text('Item 2'),
+            Text('Item 3'),
+        ],
+    )
+    ```
+
+- `Row`: Menyusun elemen secara horizontal, satu di samping yang lainnya.
+    ```dart
+    Row(
+        children: <Widget>[
+            Text('Item 1'),
+            Text('Item 2'),
+            Text('Item 3'),
+        ],
+    )
+    ```
+
+### Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+
+Pada halaman form pada tugas ini, saya hanya menggunakan elemen input **TextField** untuk menerima input teks dari pengguna. Elemen ini digunakan untuk mendapatkan input text dari nama, harga, jumlah, dan deskipsi produk.
+
+Elemen-elemen input lain pada Flutter yang tidak saya gunakan, yaitu:
+
+- **Checkbox**: Untuk memilih satu atau lebih opsi dari beberapa pilihan. Menyimpan status boolean (checked/unchecked).
+
+- **Radio**: Untuk memilih satu opsi dari beberapa pilihan yang tersedia. Hanya satu pilihan yang dapat dipilih dalam satu grup.
+
+- **Switch**: Untuk mengubah status boolean antara dua kondisi (misalnya, on/off).
+
+- **Slider**: Untuk memilih nilai numerik dalam rentang tertentu dengan cara menggeser slider.
+
+- **DropdownButton**: Untuk memilih satu opsi dari daftar pilihan dalam bentuk dropdown.
+
+- **DatePicker**: Untuk memilih tanggal dari kalender. Biasanya digunakan dalam bentuk dialog.
+
+- **TimePicker**: Untuk memilih waktu tertentu dari dialog pemilih waktu.
+
+### Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+
+Pada aplikasi Flutter yang saya buat, saya telah mengimplementasikan tema untuk menjaga tampilan semua widget dan aplikasi saling seragam. Saya menggunakan `ThemeData` untuk mendefinisikan skema warna dan gaya desain yang akan digunakan di seluruh aplikasi.
+
+```dart
+    ...
+    theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blue,
+        ).copyWith(secondary: Colors.blue[400]),
+        useMaterial3: true,
+    ),
+    ...
+```
+
+### Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+
+Untuk menangani navigasi dengan banyak halaman, biasanya digunakan kombinasi antara `Drawer` dan `Navigator` untuk mempermudah navigasi antar halaman. `Drawer` berfungsi sebagai menu samping yang memberikan pengguna pilihan untuk berpindah antara berbagai halaman dalam aplikasi. Di dalam `Drawer`, terdapat beberapa item menu, masing-masing mewakili halaman yang berbeda. Ketika pengguna memilih salah satu item, `Navigator.push` digunakan untuk menavigasi ke halaman baru. Di sisi lain, `Navigator` mengelola transisi antara halaman dengan menggunakan mekanisme stack, memungkinkan pengguna untuk berpindah ke halaman lain dan kembali ke halaman sebelumnya dengan `Navigator.pop`.
+```dart
+...
+return Drawer(
+    child: ListView(
+        children: [
+            DrawerHeader(
+                ...
+            ),
+            ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: const Text('Halaman Utama'),
+                // Bagian redirection ke MyHomePage
+                onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyHomePage(),
+                        )
+                    );
+                },
+            ),
+            ListTile(
+                leading: const Icon(Icons.add_shopping_cart),
+                title: const Text('Tambah Item'),
+                // Bagian redirection ke ProductFormPage
+                onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductFormPage(),
+                        )
+                    );
+                },
+            ),
+        ],
+    ),
+);
+...
+```
 
 ## Tugas 7
 
