@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wsnshop_mobile/screens/list_product.dart';
 import 'package:wsnshop_mobile/screens/product_form.dart';
 
 class ItemHomepage {
@@ -40,6 +41,12 @@ class ItemCard extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => ProductFormPage(),
                 )
+              );
+          } else if (item.name == "Lihat Produk") {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProductPage()
+                  ),
               );
           }
         },

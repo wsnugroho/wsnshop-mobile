@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wsnshop_mobile/screens/menu.dart';
+import 'package:wsnshop_mobile/screens/list_product.dart';
 import 'package:wsnshop_mobile/screens/product_form.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -63,6 +64,17 @@ class LeftDrawer extends StatelessWidget {
                 )
               );
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.add_reaction_rounded),
+              title: const Text('Daftar Produk'),
+              onTap: () {
+                  // Route menu ke halaman mood
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductPage()),
+                  );
+              },
           ),
         ],
       ),
