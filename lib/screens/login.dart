@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:wsnshop_mobile/screens/register.dart';
 import 'package:wsnshop_mobile/screens/menu.dart';
-// TODO: Import halaman RegisterPage jika sudah dibuat
 
 void main() {
   runApp(const LoginApp());
