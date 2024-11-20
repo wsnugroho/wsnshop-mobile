@@ -6,6 +6,131 @@
 
 <hr>
 
+## Tugas 9
+
+### Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+
+Membuat model untuk pengambilan atau pengiriman data JSON penting karena model memberikan struktur yang jelas dan memastikan data yang diterima atau dikirim memiliki atribut yang sesuai. Model membantu memvalidasi data, seperti memastikan tipe data benar dan atribut wajib tersedia. Selain itu, model mempermudah proses serialisasi dan deserialisasi, mengubah data dari format JSON menjadi objek aplikasi dan sebaliknya. Ini menjadikan pengelolaan data lebih terorganisir dan mudah di-debug.
+
+Jika kita tidak membuat model terlebih dahulu, error mungkin saja terjadi, terutama dalam aplikasi yang kompleks atau saat data JSON tidak sesuai ekspektasi. Misalnya, atribut yang hilang atau tipe data yang tidak cocok dapat menyebabkan kegagalan saat memproses data. Meski tidak selalu wajib untuk data sederhana, penggunaan model sangat disarankan untuk mencegah kesalahan dan memastikan stabilitas sistem.
+
+### Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+
+Library http yang diimplementasikan pada tugas ini berfungsi untuk melakukan permintaan HTTP dari aplikasi Flutter ke server. Dengan menggunakan library ini, aplikasi dapat mengirim data ke server (misalnya, menggunakan metode POST untuk mengirim data produk baru) dan mengambil data dari server (misalnya, menggunakan metode GET untuk mengambil daftar produk). Selain itu, library http juga membantu dalam mengelola respons dari server, seperti memeriksa status kode respons dan memproses data JSON yang diterima. Library ini juga dapat digunakan untuk mengelola autentikasi dan otorisasi dengan mengirimkan token atau cookie yang diperlukan dalam permintaan HTTP.
+
+### Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+Fungsi dari CookieRequest adalah untuk mengelola sesi autentikasi dan otorisasi dalam aplikasi Flutter dengan menggunakan cookie. CookieRequest memungkinkan aplikasi untuk menyimpan dan mengirim cookie yang diperlukan untuk menjaga sesi pengguna tetap aktif, serta untuk mengirim permintaan HTTP yang memerlukan autentikasi. Instance CookieRequest perlu dibagikan ke semua komponen di aplikasi Flutter agar setiap komponen dapat mengakses dan menggunakan sesi autentikasi yang sama. Dengan cara ini, pengguna tidak perlu login ulang setiap kali berpindah halaman, dan semua permintaan HTTP yang memerlukan autentikasi dapat menggunakan cookie yang sama untuk menjaga konsistensi dan keamanan sesi pengguna.
+
+### Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+
+1. **Input Data**
+
+    Pengguna memasukkan data melalui elemen input pada aplikasi, seperti form atau text field.
+
+2. **Validasi Data**
+
+    Data yang dimasukkan pengguna divalidasi untuk memastikan bahwa data tersebut sesuai dengan aturan yang ditentukan (misalnya, tidak kosong, format benar).
+
+3. **Mengirim Data ke Server**
+
+    Setelah validasi, data dikirim ke server menggunakan metode HTTP POST.
+
+4. **Menerima Respons dari Server**
+
+    Server memproses data yang dikirim dan mengirimkan respons kembali ke aplikasi, biasanya dalam format JSON.
+
+5. **Menampilkan Notifikasi**
+
+    Aplikasi menampilkan notifikasi kepada pengguna berdasarkan respons dari server, seperti pesan sukses atau kesalahan.
+
+6. **Mengambil Data dari Server**
+
+    Aplikasi mengambil data dari server menggunakan metode HTTP GET untuk menampilkan data terbaru.
+
+7. **Memproses Data yang Diterima**
+
+    Data yang diterima dari server di-decode dari format JSON menjadi objek yang dapat digunakan dalam aplikasi.
+
+8. **Menampilkan Data pada UI**
+
+    Data yang telah diproses ditampilkan pada UI menggunakan widget atau komponen yang sesuai.
+
+### Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+1. Registrasi
+
+    a. Input Data
+    
+    Pengguna memasukkan data akun seperti username, password, dan konfirmasi password melalui form di aplikasi Flutter.
+    
+    b. Validasi Data
+    
+    Aplikasi Flutter memvalidasi data input untuk memastikan semua field terisi dan password sesuai dengan konfirmasi password.
+    
+    c. Mengirim Data ke Server
+    
+    Data yang telah divalidasi dikirim ke server Django menggunakan HTTP POST.
+    
+    d. Proses di Server
+    
+    Django menerima data, memvalidasi ulang, dan membuat akun baru jika data valid. Django kemudian mengirimkan respons kembali ke aplikasi Flutter.
+    
+    e. Respons di Aplikasi
+    
+    Aplikasi Flutter menampilkan notifikasi sukses atau pesan kesalahan berdasarkan respons dari server.
+
+2. Login:
+
+    a. Input Data
+    
+    Pengguna memasukkan username dan password melalui form di aplikasi Flutter.
+    
+    b. Validasi Data
+    
+    Aplikasi Flutter memvalidasi data input untuk memastikan semua field terisi.
+    
+    c. Mengirim Data ke Server
+    
+    Data yang telah divalidasi dikirim ke server Django menggunakan HTTP POST.
+    
+    d. Proses di Server
+    
+    Django memeriksa kredensial yang dikirim. Jika valid, Django membuat sesi baru dan mengirimkan cookie sesi kembali ke aplikasi Flutter.
+    
+    e. Respons di Aplikasi
+    
+    Aplikasi Flutter menyimpan cookie sesi dan menampilkan notifikasi sukses atau pesan kesalahan berdasarkan respons dari server. Jika login berhasil, aplikasi menavigasi pengguna ke halaman utama.
+
+3. Logout:
+
+    a. Mengirim Permintaan ke Server
+    
+    Aplikasi Flutter mengirim permintaan logout ke server Django menggunakan HTTP POST.
+    
+    b. Proses di Server
+    
+    Django menghapus sesi pengguna dan mengirimkan respons kembali ke aplikasi Flutter.
+    
+    c. Respons di Aplikasi
+    
+    Aplikasi Flutter menghapus cookie sesi dan menampilkan notifikasi bahwa pengguna telah logout. Aplikasi kemudian menavigasi pengguna kembali ke halaman login.
+
+4. Menampilkan Menu:
+
+    a. Cek Status Login
+    
+    Aplikasi Flutter memeriksa apakah pengguna sudah login dengan memeriksa keberadaan cookie sesi.
+    
+    b. Navigasi ke Halaman Utama
+    
+    Jika pengguna sudah login, aplikasi menavigasi ke halaman utama dan menampilkan menu yang sesuai.
+    
+    c. Navigasi ke Halaman Login
+    
+    Jika pengguna belum login, aplikasi menavigasi ke halaman login untuk meminta pengguna melakukan autentikasi.
+
+
 ## Tugas 8
 
 ### Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
