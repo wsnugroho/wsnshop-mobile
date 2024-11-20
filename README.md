@@ -70,14 +70,14 @@ Elemen-elemen input lain pada Flutter yang tidak saya gunakan, yaitu:
 Pada aplikasi Flutter yang saya buat, saya telah mengimplementasikan tema untuk menjaga tampilan semua widget dan aplikasi saling seragam. Saya menggunakan `ThemeData` untuk mendefinisikan skema warna dan gaya desain yang akan digunakan di seluruh aplikasi.
 
 ```dart
-    ...
-    theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-        ).copyWith(secondary: Colors.blue[400]),
-        useMaterial3: true,
-    ),
-    ...
+...
+theme: ThemeData(
+    colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.blue,
+    ).copyWith(secondary: Colors.blue[400]),
+    useMaterial3: true,
+),
+...
 ```
 
 ### Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
