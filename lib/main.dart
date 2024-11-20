@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:wsnshop_mobile/screens/menu.dart';
+import 'package:wsnshop_mobile/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           ).copyWith(secondary: Colors.blue[400]),
           useMaterial3: true,
         ),
-        home: MyHomePage(),
+        home: const LoginPage(),
       ),
     );
   }
