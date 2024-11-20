@@ -130,6 +130,137 @@ Fungsi dari CookieRequest adalah untuk mengelola sesi autentikasi dan otorisasi 
     
     Jika pengguna belum login, aplikasi menavigasi ke halaman login untuk meminta pengguna melakukan autentikasi.
 
+### Langkah Implementasi proyek
+
+1. Implementasi fitur registrasi
+    - Membuat endpoint /register pada django untuk registrasi user
+    ```python
+    @csrf_exempt
+    def register(request):
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            ...
+    ```
+    - Membuat halaman registrasi pada flutter
+    - Melakukan request ke endpoint /register unutk membuat user baru di halaman registrasi
+    ```dart
+    final response = await request.postJson(
+        "http://localhost:8000/auth/register/",
+        jsonEncode({
+            "username": username,
+            "password1": password1,
+            "password2": password2,
+        })
+    );
+    ```
+
+2. Implementasi fitur login
+- Membuat endpoint /login pada django untuk registrasi user
+    ```python
+    @csrf_exempt
+    def login(request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        ...
+    ```
+    - Membuat halaman login pada flutter
+    - Melakukan request ke endpoint /login unutk membuat user baru di halaman registrasi
+    ```dart
+    final response = await request
+        .login("http://localhost:8000/auth/login/", {
+            'username': username,
+            'password': password,
+        });
+    ```
+
+3. Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+    - Membuat model pada flutter
+    - Menggunakan Provider untuk share state CookieRequest ke seluruh widget flutter
+    ```dart
+    ...
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+        ...
+    )
+    ...
+    ```
+
+4. Membuat model kustom sesuai dengan proyek aplikasi Django.
+    - Menggunakan website Quicktype untuk mendapakan models flutter dari response Django
+    - Flutter models disimpan di lib/models/product.dart
+
+5. Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy.
+    - Mendapatkan & parsing semua data dari endpoint /json
+    - Build ListItem untuk setiap data
+    ```dart
+    return ListView.builder(
+        itemCount: snapshot.data!.length,
+        itemBuilder: (_, index) => GestureDetector(
+            onTap: () {
+            Navigator.push(
+                context,
+                    MaterialPageRoute(
+                        builder: (context) => ProductViewPage(
+                            product: snapshot.data![index],
+                        ),
+                    ),
+                );
+            },
+        ),
+        child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Text(
+                    "${snapshot.data![index].fields.name}",
+                    style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    ),
+                ),
+                const SizedBox(height: 10),
+                Text("${snapshot.data![index].fields.price}"),
+                const SizedBox(height: 10),
+                Text("${snapshot.data![index].fields.description}"),
+                ],
+            ),
+        ),
+    )
+    ```
+
+6. Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+    - Menggunakan Gesture Detector untuk itemBuilder agar setiap card dapat ditekan dan diarahkan ke masing-masing detail setiap card
+    - Mengarahkan ke detail page menggunakan Navigator.push
+    ```dart
+    itemBuilder: (_, index) => GestureDetector(
+        onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => ProductViewPage(
+                    product: snapshot.data![index],
+                ),
+                ),
+            );
+        },
+    )
+    ```
+
+7. Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login.
+    - Pada handler untuk mendapatkan produk lakukan filtering sebelum return datanya sebagai response
+    ```python
+    def show_json(request):
+        data = Product.objects.filter(user=request.user)
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    ```
+
 
 ## Tugas 8
 
